@@ -4,41 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Malika Yadav</title>
-  
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --cream: #f5f0e8;
-      --ink: #1a1612;
-      --muted: #7a6f63;
-      --accent: #b85c3a;
-      --light: #ede8df;
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --text: #e8e8e8;
+      --muted: #888;
+      --accent: #c8956c;
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
-      background-color: var(--cream);
-      color: var(--ink);
+      background: var(--bg);
+      color: var(--text);
       font-family: Georgia, 'Times New Roman', serif;
-      font-size: 18px;
-      line-height: 1.7;
-      overflow-x: hidden;
+      font-size: 17px;
+      line-height: 1.8;
     }
 
-    /* grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.4;
-    }
-
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -46,297 +32,275 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 3rem;
-      background: rgba(245,240,232,0.85);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(26,22,18,0.08);
+      padding: 1.2rem 4rem;
+      background: rgba(13,13,13,0.95);
+      border-bottom: 1px solid var(--border);
     }
 
     .nav-name {
-      font-size: 1rem;
       font-family: 'Courier New', monospace;
-      font-weight: 300;
-      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
       color: var(--muted);
+      text-transform: uppercase;
     }
 
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
     .nav-links a {
       font-family: 'Courier New', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--ink);
+      color: var(--muted);
       text-decoration: none;
       transition: color 0.2s;
     }
+
     .nav-links a:hover { color: var(--accent); }
 
-    /* ── HERO ── */
+    /* HERO */
     .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 8rem 3rem 4rem;
+      padding: 0 4rem;
+      border-bottom: 1px solid var(--border);
       position: relative;
+      overflow: hidden;
     }
 
-    .hero-label {
+    .hero::after {
+      content: 'MY';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28vw;
+      font-style: italic;
+      color: rgba(200,149,108,0.04);
+      font-family: Georgia, serif;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .hero-tag {
       font-family: 'Courier New', monospace;
       font-size: 0.7rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.2s;
     }
 
-    .hero-name {
-      font-size: clamp(3.5rem, 10vw, 8rem);
-      font-weight: 300;
-      line-height: 1;
+    .hero h1 {
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: normal;
+      line-height: 1.05;
       letter-spacing: -0.02em;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.4s;
+      margin-bottom: 1.5rem;
     }
 
-    .hero-name em {
-      font-style: italic;
+    .hero h1 span {
       color: var(--accent);
+      font-style: italic;
     }
 
-    .hero-tagline {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      font-weight: 300;
+    .hero-sub {
+      font-size: 1.05rem;
       color: var(--muted);
-      max-width: 480px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.6s;
+      max-width: 420px;
+      line-height: 1.7;
     }
 
-    .hero-scroll {
+    .hero-bottom {
       position: absolute;
-      bottom: 2.5rem;
-      left: 3rem;
+      bottom: 2rem;
+      left: 4rem;
       font-family: 'Courier New', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 1s;
+      color: var(--border);
     }
 
-    .hero-scroll::before {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: var(--muted);
-    }
-
-    /* decorative circle */
-    .hero-deco {
-      position: absolute;
-      right: -80px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      border: 1px solid rgba(184,92,58,0.15);
-      opacity: 0;
-      animation: fadeIn 1.2s ease forwards 0.8s;
-    }
-
-    .hero-deco::before {
-      content: '';
-      position: absolute;
-      inset: 40px;
-      border-radius: 50%;
-      border: 1px solid rgba(184,92,58,0.1);
-    }
-
-    /* ── SECTIONS ── */
+    /* SECTIONS */
     section {
-      padding: 6rem 3rem;
-      max-width: 860px;
+      padding: 6rem 4rem;
+      border-bottom: 1px solid var(--border);
+      max-width: 900px;
       margin: 0 auto;
+      width: 100%;
     }
 
-    .section-label {
+    .label {
       font-family: 'Courier New', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       display: flex;
       align-items: center;
       gap: 1rem;
     }
 
-    .section-label::after {
+    .label::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: rgba(184,92,58,0.25);
+      background: var(--border);
     }
 
-    .section-title {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 300;
-      line-height: 1.15;
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: normal;
+      line-height: 1.2;
       margin-bottom: 2rem;
     }
 
-    .section-title em { font-style: italic; color: var(--accent); }
+    h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
 
     p {
       color: var(--muted);
-      font-weight: 300;
       margin-bottom: 1.2rem;
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
 
-    /* ── TIMELINE ── */
-    .timeline { margin-top: 3rem; }
+    /* TIMELINE */
+    .timeline { margin-top: 2.5rem; }
 
-    .timeline-item {
+    .tl-item {
       display: grid;
-      grid-template-columns: 120px 1fr;
+      grid-template-columns: 110px 1fr;
       gap: 2rem;
       padding: 2rem 0;
-      border-top: 1px solid rgba(26,22,18,0.08);
-      position: relative;
+      border-top: 1px solid var(--border);
     }
 
-    .timeline-item:last-child { border-bottom: 1px solid rgba(26,22,18,0.08); }
+    .tl-item:last-child { border-bottom: 1px solid var(--border); }
 
-    .timeline-year {
+    .tl-year {
       font-family: 'Courier New', monospace;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--accent);
-      letter-spacing: 0.1em;
-      padding-top: 0.2rem;
+      letter-spacing: 0.08em;
+      padding-top: 4px;
     }
 
-    .timeline-content h3 {
-      font-size: 1.1rem;
-      font-weight: 400;
-      margin-bottom: 0.3rem;
-    }
-
-    .timeline-content p {
-      font-size: 0.9rem;
-      margin: 0;
-    }
-
-    /* ── GOALS ── */
-    .goals-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-    }
-
-    .goal-card {
-      background: var(--light);
-      padding: 2rem;
-      border-radius: 2px;
-      border-left: 2px solid var(--accent);
-      transition: transform 0.2s;
-    }
-
-    .goal-card:hover { transform: translateY(-3px); }
-
-    .goal-card h3 {
+    .tl-body h3 {
       font-size: 1rem;
-      font-weight: 400;
-      margin-bottom: 0.5rem;
+      font-weight: normal;
+      margin-bottom: 0.3rem;
+      color: var(--text);
     }
 
-    .goal-card p {
+    .tl-body p {
       font-size: 0.88rem;
       margin: 0;
     }
 
-    /* ── CONTACT ── */
-    .contact-line {
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      font-weight: 300;
-      margin-bottom: 2rem;
+    /* GOALS */
+    .goals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin-top: 2.5rem;
+      border: 1px solid var(--border);
     }
 
-    .contact-line em { font-style: italic; color: var(--accent); }
+    .goal {
+      background: var(--surface);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
 
-    .contact-email {
+    .goal:hover { background: #1e1e1e; }
+
+    .goal-num {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.8rem;
+    }
+
+    .goal h3 {
+      font-size: 1rem;
+      font-weight: normal;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .goal p {
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    /* CONTACT */
+    .contact-big {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: normal;
+      line-height: 1.3;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-big em { font-style: italic; color: var(--accent); }
+
+    .email-link {
+      display: inline-block;
       font-family: 'Courier New', monospace;
       font-size: 0.9rem;
-      color: var(--ink);
+      color: var(--text);
       text-decoration: none;
-      border-bottom: 1px solid var(--accent);
-      padding-bottom: 2px;
-      transition: color 0.2s;
+      border: 1px solid var(--border);
+      padding: 0.9rem 2rem;
+      letter-spacing: 0.08em;
+      transition: border-color 0.2s, color 0.2s;
     }
 
-    .contact-email:hover { color: var(--accent); }
+    .email-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
-    /* ── FOOTER ── */
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 2rem;
       font-family: 'Courier New', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.1em;
-      color: var(--muted);
-      border-top: 1px solid rgba(26,22,18,0.08);
+      color: var(--border);
+      text-transform: uppercase;
     }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── RESPONSIVE ── */
+    /* RESPONSIVE */
     @media (max-width: 640px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
-      .hero { padding: 7rem 1.5rem 4rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { padding: 0 1.5rem; }
       section { padding: 4rem 1.5rem; }
       .goals-grid { grid-template-columns: 1fr; }
-      .timeline-item { grid-template-columns: 80px 1fr; gap: 1rem; }
-      .hero-deco { display: none; }
+      .tl-item { grid-template-columns: 80px 1fr; gap: 1rem; }
+      .hero-bottom { left: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <span class="nav-name">malika yadav</span>
+    <span class="nav-name">Malika Yadav</span>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#education">Education</a></li>
@@ -347,45 +311,44 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-deco"></div>
-    <p class="hero-label">BSc. CSIT Student — Kathmandu, Nepal</p>
-    <h1 class="hero-name">Malika<br><em>Yadav</em></h1>
-    <p class="hero-tagline">Aspiring full stack developer. Curious mind. Finding my path in tech — one line of code at a time.</p>
-    <span class="hero-scroll">Scroll to explore</span>
+    <p class="hero-tag">BSc. CSIT Student &nbsp;—&nbsp; Kathmandu, Nepal</p>
+    <h1>Malika<br><span>Yadav</span></h1>
+    <p class="hero-sub">Aspiring full stack developer. Finding my way in tech — one step at a time.</p>
+    <span class="hero-bottom">malikaydv.github.io</span>
   </div>
 
   <!-- ABOUT -->
   <section id="about">
-    <p class="section-label">About me</p>
-    <h2 class="section-title reveal">A journey that<br>took <em>its own route</em></h2>
-    <p class="reveal">My interest in computers started back in grade 10, but life had other plans. After losing my father, I stayed close to home and studied biology — a path chosen by circumstance, not by heart.</p>
-    <p class="reveal">After completing my 12th grade, I made the decision to step away from premed and go after what I had always wanted. I prepared for IOE, then discovered BSc. CSIT — and knew it was the right fit.</p>
-    <p class="reveal">I am now a first-semester CSIT student at Patan Multiple Campus, building the foundation I always wanted. It took longer than expected, but I am exactly where I am supposed to be.</p>
+    <p class="label">About me</p>
+    <h2>A path that took<br>its own <em>route</em></h2>
+    <p>My interest in computers started back in grade 10, but life had other plans. After losing my father, I stayed close to home and ended up studying biology — a path chosen by circumstance, not by heart.</p>
+    <p>After completing grade 12, I made the decision to step away from premed and go after what I had always wanted. I discovered BSc. CSIT and knew it was the right fit.</p>
+    <p>I am now a first-semester CSIT student at Patan Multiple Campus, building the foundation I always wanted. It took longer than expected, but I am exactly where I am supposed to be.</p>
   </section>
 
   <!-- EDUCATION -->
   <section id="education">
-    <p class="section-label">Education</p>
-    <h2 class="section-title reveal">Where I've <em>learned</em></h2>
-    <div class="timeline reveal">
-      <div class="timeline-item">
-        <span class="timeline-year">2025 — Now</span>
-        <div class="timeline-content">
+    <p class="label">Education</p>
+    <h2>Where I've <em>learned</em></h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="tl-year">2025 — Now</span>
+        <div class="tl-body">
           <h3>BSc. Computer Science & Information Technology</h3>
           <p>Patan Multiple Campus, Lalitpur</p>
         </div>
       </div>
-      <div class="timeline-item">
-        <span class="timeline-year">2024 – 2025</span>
-        <div class="timeline-content">
-          <h3>Higher Secondary Education (Science)</h3>
+      <div class="tl-item">
+        <span class="tl-year">2024 — 2025</span>
+        <div class="tl-body">
+          <h3>Higher Secondary Education — Grade 12</h3>
           <p>Tribhuvan Secondary School</p>
         </div>
       </div>
-      <div class="timeline-item">
-        <span class="timeline-year">2023</span>
-        <div class="timeline-content">
-          <h3>Secondary Education Examination</h3>
+      <div class="tl-item">
+        <span class="tl-year">2023</span>
+        <div class="tl-body">
+          <h3>Secondary Education Examination — Grade 10</h3>
           <p>Tribhuvan Secondary School</p>
         </div>
       </div>
@@ -394,33 +357,30 @@
 
   <!-- GOALS -->
   <section id="goals">
-    <p class="section-label">Looking ahead</p>
-    <h2 class="section-title reveal">What I'm <em>working toward</em></h2>
-    <div class="goals-grid reveal">
-      <div class="goal-card">
+    <p class="label">Looking ahead</p>
+    <h2>What I'm <em>working toward</em></h2>
+    <div class="goals-grid">
+      <div class="goal">
+        <p class="goal-num">01</p>
         <h3>Full Stack Development</h3>
         <p>Learning to build complete web applications from front to back — my core technical goal.</p>
       </div>
-      <div class="goal-card">
+      <div class="goal">
+        <p class="goal-num">02</p>
         <h3>Remote Tech Career</h3>
-        <p>Aiming to work remotely as a developer from Nepal, contributing to global projects.</p>
+        <p>Aiming to work remotely as a developer from Nepal, contributing to projects worldwide.</p>
       </div>
-
     </div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact">
-    <p class="section-label">Get in touch</p>
-    <p class="contact-line reveal">Let's <em>connect</em></p>
-    <a class="contact-email reveal" href="/cdn-cgi/l/email-protection#b4d9d5d8dddfd5cdd5d0d5c287848df4d3d9d5ddd89ad7dbd9"><span class="__cf_email__" data-cfemail="1c717d7075777d657d787d6a2f2c255c7b717d7570327f7371">[email&#160;protected]</span></a>
+    <p class="label">Get in touch</p>
+    <p class="contact-big">Let's <em>connect</em></p>
+    <a class="email-link" href="mailto:malikayadav903@gmail.com">malikayadav903@gmail.com</a>
   </section>
 
-  <footer>
-    © 2025 Malika Yadav &nbsp;·&nbsp; Kathmandu, Nepal
-  </footer>
+  <footer>© 2025 Malika Yadav &nbsp;·&nbsp; Kathmandu, Nepal</footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forE
+</body>
+</html>
