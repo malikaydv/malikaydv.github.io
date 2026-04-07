@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Malika Yadav</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --ink: #1a1612;
+      --muted: #7a6f63;
+      --accent: #b85c3a;
+      --light: #ede8df;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(26,22,18,0.08);
+    }
+
+    .nav-name {
+      font-size: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+    }
+
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-name {
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-tagline {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 3rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1s;
+    }
+
+    .hero-scroll::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    /* decorative circle */
+    .hero-deco {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(184,92,58,0.15);
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards 0.8s;
+    }
+
+    .hero-deco::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(184,92,58,0.1);
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 3rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(184,92,58,0.25);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 2rem;
+    }
+
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    p {
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { margin-top: 3rem; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(26,22,18,0.08);
+      position: relative;
+    }
+
+    .timeline-item:last-child { border-bottom: 1px solid rgba(26,22,18,0.08); }
+
+    .timeline-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      padding-top: 0.2rem;
+    }
+
+    .timeline-content h3 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-content p {
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    /* ── GOALS ── */
+    .goals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .goal-card {
+      background: var(--light);
+      padding: 2rem;
+      border-radius: 2px;
+      border-left: 2px solid var(--accent);
+      transition: transform 0.2s;
+    }
+
+    .goal-card:hover { transform: translateY(-3px); }
+
+    .goal-card h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .goal-card p {
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    /* ── CONTACT ── */
+    .contact-line {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .contact-line em { font-style: italic; color: var(--accent); }
+
+    .contact-email {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    .contact-email:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      border-top: 1px solid rgba(26,22,18,0.08);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero { padding: 7rem 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .goals-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 80px 1fr; gap: 1rem; }
+      .hero-deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-name">malika yadav</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#goals">Goals</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-deco"></div>
+    <p class="hero-label">BSc. CSIT Student — Kathmandu, Nepal</p>
+    <h1 class="hero-name">Malika<br><em>Yadav</em></h1>
+    <p class="hero-tagline">Aspiring full stack developer. Curious mind. Finding my path in tech — one line of code at a time.</p>
+    <span class="hero-scroll">Scroll to explore</span>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">About me</p>
+    <h2 class="section-title reveal">A journey that<br>took <em>its own route</em></h2>
+    <p class="reveal">My interest in computers started back in grade 10, but life had other plans. After losing my father, I stayed close to home and studied biology — a path chosen by circumstance, not by heart.</p>
+    <p class="reveal">After completing my 12th grade, I made the decision to step away from premed and go after what I had always wanted. I prepared for IOE, then discovered BSc. CSIT — and knew it was the right fit.</p>
+    <p class="reveal">I am now a first-semester CSIT student at Patan Multiple Campus, building the foundation I always wanted. It took longer than expected, but I am exactly where I am supposed to be.</p>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">Education</p>
+    <h2 class="section-title reveal">Where I've <em>learned</em></h2>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <span class="timeline-year">2025 — Now</span>
+        <div class="timeline-content">
+          <h3>BSc. Computer Science & Information Technology</h3>
+          <p>Patan Multiple Campus, Lalitpur</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2024 – 2025</span>
+        <div class="timeline-content">
+          <h3>Higher Secondary Education (Science)</h3>
+          <p>Tribhuvan Secondary School</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2023</span>
+        <div class="timeline-content">
+          <h3>Secondary Education Examination</h3>
+          <p>Tribhuvan Secondary School</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOALS -->
+  <section id="goals">
+    <p class="section-label">Looking ahead</p>
+    <h2 class="section-title reveal">What I'm <em>working toward</em></h2>
+    <div class="goals-grid reveal">
+      <div class="goal-card">
+        <h3>Full Stack Development</h3>
+        <p>Learning to build complete web applications from front to back — my core technical goal.</p>
+      </div>
+      <div class="goal-card">
+        <h3>Remote Tech Career</h3>
+        <p>Aiming to work remotely as a developer from Nepal, contributing to global projects.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Get in touch</p>
+    <p class="contact-line reveal">Let's <em>connect</em></p>
+    <a class="contact-email reveal" href="/cdn-cgi/l/email-protection#b4d9d5d8dddfd5cdd5d0d5c287848df4d3d9d5ddd89ad7dbd9"><span class="__cf_email__" data-cfemail="1c717d7075777d657d787d6a2f2c255c7b717d7570327f7371">[email&#160;protected]</span></a>
+  </section>
+
+  <footer>
+    © 2025 Malika Yadav &nbsp;·&nbsp; Kathmandu, Nepal
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forE
