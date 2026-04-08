@@ -3,28 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Malika Yadav</title>
+  <title>Malika Yadav — BSc. CSIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ── RESET & ROOT ───────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0d0d0d;
-      --surface: #161616;
-      --border: #2a2a2a;
-      --text: #e8e8e8;
-      --muted: #888;
-      --accent: #c8956c;
+      --bg:       #0d0d0d;
+      --surface:  #141414;
+      --surface2: #1a1a1a;
+      --border:   #262626;
+      --border2:  #333;
+      --text:     #ece8e1;
+      --muted:    #7a7672;
+      --muted2:   #a09b96;
+      --accent:   #c8956c;
+      --accent2:  #e6b896;
+      --accent-dim: rgba(200,149,108,0.12);
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:    'DM Mono', 'Courier New', monospace;
+      --font-body:    'Lato', sans-serif;
+
+      --max-w: 1020px;
+      --gap: clamp(1.5rem, 5vw, 4rem);
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 17px;
-      line-height: 1.8;
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.75;
+      overflow-x: hidden;
     }
 
-    /* NAV */
+    /* ── CURSOR DOT ──────────────────────────────────────────── */
+    .cursor-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, opacity 0.3s;
+      mix-blend-mode: screen;
+    }
+
+    /* ── GRAIN OVERLAY ───────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -32,117 +75,194 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 4rem;
-      background: rgba(13,13,13,0.95);
+      padding: 1.1rem clamp(1.5rem, 5vw, 4rem);
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
     .nav-name {
-      font-family: 'Courier New', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
       color: var(--muted);
       text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: clamp(1.2rem, 3vw, 2.5rem);
       list-style: none;
     }
 
     .nav-links a {
-      font-family: 'Courier New', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
-      transition: color 0.2s;
+      transition: color 0.25s;
+      position: relative;
     }
 
-    .nav-links a:hover { color: var(--accent); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 100%;
+      height: 1px;
+      background: var(--accent);
+      transition: right 0.3s ease;
+    }
 
-    /* HERO */
+    .nav-links a:hover { color: var(--accent2); }
+    .nav-links a:hover::after { right: 0; }
+
+    /* ── HERO ────────────────────────────────────────────────── */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 4rem;
-      border-bottom: 1px solid var(--border);
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding: clamp(6rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem) 3rem;
       position: relative;
       overflow: hidden;
     }
 
-    .hero::after {
-      content: 'MY';
+    /* Large decorative letter watermark */
+    .hero-watermark {
       position: absolute;
-      right: -20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 28vw;
+      right: clamp(-2rem, -2vw, -1rem);
+      bottom: 0;
+      font-family: var(--font-display);
+      font-size: clamp(22vw, 30vw, 35vw);
+      font-weight: 300;
       font-style: italic;
-      color: rgba(200,149,108,0.04);
-      font-family: Georgia, serif;
+      color: rgba(200,149,108,0.045);
+      line-height: 0.85;
       pointer-events: none;
       user-select: none;
-      line-height: 1;
+      letter-spacing: -0.05em;
     }
 
+    /* Subtle horizontal rule with gradient */
+    .hero-rule {
+      position: absolute;
+      left: clamp(1.5rem, 5vw, 4rem); right: 0;
+      top: calc(clamp(6rem, 12vw, 9rem) + 1.4rem);
+      height: 1px;
+      background: linear-gradient(to right, var(--border2), transparent);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
     .hero-tag {
-      font-family: 'Courier New', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .hero-tag span {
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--accent);
+      opacity: 0.6;
     }
 
     .hero h1 {
-      font-size: clamp(3.5rem, 9vw, 7.5rem);
-      font-weight: normal;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
     }
 
-    .hero h1 span {
-      color: var(--accent);
-      font-style: italic;
-    }
+    .hero h1 .first { display: block; color: var(--text); }
+    .hero h1 .last  { display: block; color: var(--accent); font-style: italic; }
 
     .hero-sub {
-      font-size: 1.05rem;
-      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      color: var(--muted2);
       max-width: 420px;
-      line-height: 1.7;
+      line-height: 1.8;
+      font-weight: 300;
     }
 
     .hero-bottom {
-      position: absolute;
-      bottom: 2rem;
-      left: 4rem;
-      font-family: 'Courier New', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-bottom-left {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--border);
+      color: var(--border2);
     }
 
-    /* SECTIONS */
-    section {
-      padding: 6rem 4rem;
-      border-bottom: 1px solid var(--border);
-      max-width: 900px;
-      margin: 0 auto;
+    .hero-scroll {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .hero-scroll-line {
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--muted);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { width: 24px; opacity: 1; }
+      50%       { width: 48px; opacity: 0.4; }
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────────── */
+    .divider {
       width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
     }
 
+    /* ── SECTION BASE ────────────────────────────────────────── */
+    section {
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+      max-width: calc(var(--max-w) + clamp(3rem, 10vw, 8rem));
+      margin: 0 auto;
+    }
+
+    .section-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    /* ── LABEL ───────────────────────────────────────────────── */
     .label {
-      font-family: 'Courier New', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 2rem;
@@ -151,154 +271,394 @@
       gap: 1rem;
     }
 
+    .label::before {
+      content: '//';
+      opacity: 0.5;
+    }
+
     .label::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: var(--border);
+      background: linear-gradient(to right, var(--border), transparent);
     }
 
-    h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: normal;
-      line-height: 1.2;
-      margin-bottom: 2rem;
+    /* ── SECTION HEADINGS ────────────────────────────────────── */
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1.8rem;
+      letter-spacing: -0.01em;
     }
 
-    h2 em {
+    .section-heading em {
       font-style: italic;
       color: var(--accent);
     }
 
-    p {
-      color: var(--muted);
-      margin-bottom: 1.2rem;
-      font-size: 1rem;
+    /* ── ABOUT ───────────────────────────────────────────────── */
+    #about { border-bottom: 1px solid var(--border); }
+
+    .about-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+      margin-top: 2.5rem;
     }
 
-    /* TIMELINE */
+    @media (max-width: 680px) {
+      .about-body { grid-template-columns: 1fr; }
+    }
+
+    .about-text p {
+      color: var(--muted2);
+      font-size: 0.97rem;
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
+      font-weight: 300;
+    }
+
+    .about-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .aside-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.5rem;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .aside-item:first-child { border-radius: 0; }
+    .aside-item:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .aside-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+
+    .aside-value {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    /* ── EDUCATION / TIMELINE ────────────────────────────────── */
+    #education { border-bottom: 1px solid var(--border); }
+
     .timeline { margin-top: 2.5rem; }
 
     .tl-item {
       display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 2rem;
+      grid-template-columns: clamp(80px, 12vw, 130px) 1fr;
+      gap: clamp(1rem, 3vw, 2.5rem);
       padding: 2rem 0;
       border-top: 1px solid var(--border);
+      position: relative;
+      transition: background 0.2s;
     }
 
     .tl-item:last-child { border-bottom: 1px solid var(--border); }
 
+    /* Accent left bar on hover */
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.35s ease;
+    }
+
+    .tl-item:hover::before { transform: scaleY(1); }
+    .tl-item:hover { padding-left: 1.2rem; }
+
     .tl-year {
-      font-family: 'Courier New', monospace;
-      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
       color: var(--accent);
       letter-spacing: 0.08em;
-      padding-top: 4px;
+      padding-top: 3px;
+      line-height: 1.4;
+    }
+
+    .tl-dot {
+      display: inline-block;
+      width: 5px; height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-bottom: 0.4rem;
+      opacity: 0.6;
     }
 
     .tl-body h3 {
-      font-size: 1rem;
-      font-weight: normal;
-      margin-bottom: 0.3rem;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
       color: var(--text);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
     }
 
-    .tl-body p {
+    .tl-body .tl-place {
+      font-family: var(--font-body);
       font-size: 0.88rem;
-      margin: 0;
+      color: var(--muted);
+      font-weight: 300;
     }
 
-    /* GOALS */
+    .tl-body .tl-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── SKILLS STRIP ────────────────────────────────────────── */
+    .skills-strip {
+      padding: clamp(2rem, 4vw, 3rem) 0;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .skills-scroll {
+      display: flex;
+      gap: 2rem;
+      animation: marquee 18s linear infinite;
+      width: max-content;
+    }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .skills-strip:hover .skills-scroll { animation-play-state: paused; }
+
+    .skill-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      padding: 0.45rem 1.1rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .skill-tag.accent {
+      color: var(--accent);
+      border-color: rgba(200,149,108,0.3);
+    }
+
+    /* ── GOALS ───────────────────────────────────────────────── */
+    #goals { border-bottom: 1px solid var(--border); }
+
     .goals-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1px;
       background: var(--border);
-      margin-top: 2.5rem;
       border: 1px solid var(--border);
+      margin-top: 2.5rem;
     }
 
     .goal {
       background: var(--surface);
-      padding: 2rem;
-      transition: background 0.2s;
+      padding: clamp(1.5rem, 3vw, 2.2rem);
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .goal:hover { background: #1e1e1e; }
+    .goal::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .goal:hover { background: var(--surface2); }
+    .goal:hover::after { transform: scaleX(1); }
 
     .goal-num {
-      font-family: 'Courier New', monospace;
-      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
       color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.8rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+      opacity: 0.7;
     }
 
     .goal h3 {
-      font-size: 1rem;
-      font-weight: normal;
-      margin-bottom: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
       color: var(--text);
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
     }
 
     .goal p {
-      font-size: 0.88rem;
-      margin: 0;
+      font-size: 0.875rem;
+      color: var(--muted2);
+      line-height: 1.75;
+      font-weight: 300;
     }
 
-    /* CONTACT */
+    /* ── CONTACT ─────────────────────────────────────────────── */
+    #contact {}
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 640px) {
+      .contact-layout { grid-template-columns: 1fr; }
+    }
+
     .contact-big {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: normal;
-      line-height: 1.3;
-      margin-bottom: 2.5rem;
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
     }
 
-    .contact-big em { font-style: italic; color: var(--accent); }
+    .contact-big em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      align-items: flex-end;
+    }
+
+    @media (max-width: 640px) {
+      .contact-right { align-items: flex-start; }
+    }
 
     .email-link {
-      display: inline-block;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
       color: var(--text);
       text-decoration: none;
-      border: 1px solid var(--border);
-      padding: 0.9rem 2rem;
-      letter-spacing: 0.08em;
-      transition: border-color 0.2s, color 0.2s;
+      border: 1px solid var(--border2);
+      padding: 0.85rem 1.6rem;
+      letter-spacing: 0.06em;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+      white-space: nowrap;
     }
 
     .email-link:hover {
       border-color: var(--accent);
       color: var(--accent);
+      background: var(--accent-dim);
     }
 
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-family: 'Courier New', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      color: var(--border);
+    .email-link-arrow {
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .email-link:hover .email-link-arrow { transform: translateX(4px); }
+
+    .contact-note {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      color: var(--muted);
       text-transform: uppercase;
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 640px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.5rem; }
-      .hero { padding: 0 1.5rem; }
-      section { padding: 4rem 1.5rem; }
-      .goals-grid { grid-template-columns: 1fr; }
-      .tl-item { grid-template-columns: 80px 1fr; gap: 1rem; }
-      .hero-bottom { left: 1.5rem; }
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      padding: 1.8rem clamp(1.5rem, 5vw, 4rem);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    footer span {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--border2);
+    }
+
+    .footer-dot {
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE TWEAKS ───────────────────────────────────── */
+    @media (max-width: 480px) {
+      .nav-links { gap: 1rem; }
+      .hero h1  { font-size: clamp(3.2rem, 14vw, 5rem); }
+      .tl-item  { padding-left: 0; }
     }
   </style>
 </head>
 <body>
 
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
   <nav>
     <span class="nav-name">Malika Yadav</span>
     <ul class="nav-links">
@@ -309,78 +669,253 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
+  <!-- ── HERO ─────────────────────────────────────────────── -->
   <div class="hero">
-    <p class="hero-tag">BSc. CSIT Student &nbsp;—&nbsp; Kathmandu, Nepal</p>
-    <h1>Malika<br><span>Yadav</span></h1>
-    <p class="hero-sub">Aspiring full stack developer. Finding my way in tech — one step at a time.</p>
-    <span class="hero-bottom">malikaydv.github.io</span>
+    <div class="hero-rule"></div>
+    <div class="hero-watermark">MY</div>
+
+    <div class="hero-content">
+      <p class="hero-tag">
+        <span></span>
+        BSc. CSIT Student &nbsp;—&nbsp; Kathmandu, Nepal
+      </p>
+      <h1>
+        <span class="first">Malika</span>
+        <span class="last">Yadav</span>
+      </h1>
+      <p class="hero-sub">
+        First-semester CSIT student at Patan Multiple Campus.
+        Aspiring full-stack developer — building skills, one semester at a time.
+      </p>
+    </div>
+
+    <div class="hero-bottom">
+      <span class="hero-bottom-left">malikaydv.github.io</span>
+      <span class="hero-scroll">
+        <span class="hero-scroll-line"></span>
+        Scroll to explore
+      </span>
+    </div>
   </div>
 
-  <!-- ABOUT -->
+  <!-- ── ABOUT ─────────────────────────────────────────────── -->
   <section id="about">
-    <p class="label">About me</p>
-    <h2>A path that took<br>its own <em>route</em></h2>
-    <p>My interest in computers started back in grade 10, but life had other plans. I stayed close to home and ended up studying biology — a path chosen by circumstance, not by heart.</p>
-    <p>After completing grade 12, I made the decision to step away from premed and go after what I had always wanted. I discovered BSc. CSIT and knew it was the right fit.</p>
-    <p>I am now a first-semester CSIT student at Patan Multiple Campus, building the foundation I always wanted. It took longer than expected, but I am exactly where I am supposed to be.</p>
+    <div class="section-inner">
+      <p class="label reveal">About me</p>
+      <h2 class="section-heading reveal reveal-delay-1">A path that took<br>its own <em>route</em></h2>
+
+      <div class="about-body">
+        <div class="about-text reveal reveal-delay-2">
+          <p>
+            My interest in computers sparked in grade 10 — but life, as it often does, had other plans. 
+            I ended up studying biology, a path chosen by circumstance rather than curiosity.
+          </p>
+          <p>
+            After completing grade 12, I made a deliberate choice: step away from premed and pursue 
+            what had always pulled at me. I found BSc. CSIT, and it felt immediately right.
+          </p>
+          <p>
+            I am now in my first semester at Patan Multiple Campus, finally building the technical 
+            foundation I had always wanted. It took a detour — but I am exactly where I need to be.
+          </p>
+        </div>
+
+        <div class="about-aside reveal reveal-delay-3">
+          <div class="aside-item">
+            <p class="aside-label">Currently</p>
+            <p class="aside-value">BSc. CSIT — Semester I</p>
+          </div>
+          <div class="aside-item" style="margin-top:1px;">
+            <p class="aside-label">Campus</p>
+            <p class="aside-value">Patan Multiple Campus</p>
+          </div>
+          <div class="aside-item" style="margin-top:1px;">
+            <p class="aside-label">Location</p>
+            <p class="aside-value">Kathmandu, Nepal</p>
+          </div>
+          <div class="aside-item" style="margin-top:1px;">
+            <p class="aside-label">Focus</p>
+            <p class="aside-value">Full-Stack Development</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- EDUCATION -->
+  <!-- ── SKILLS MARQUEE ──────────────────────────────────── -->
+  <div class="skills-strip" aria-label="Skills & technologies">
+    <div class="skills-scroll">
+      <!-- First set -->
+      <span class="skill-tag accent">HTML & CSS</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">C Programming</span>
+      <span class="skill-tag accent">Python</span>
+      <span class="skill-tag">Data Structures</span>
+      <span class="skill-tag">Git &amp; GitHub</span>
+      <span class="skill-tag accent">React (Learning)</span>
+      <span class="skill-tag">Databases</span>
+      <span class="skill-tag">Responsive Design</span>
+      <span class="skill-tag accent">Linux Basics</span>
+      <span class="skill-tag">Node.js (Soon)</span>
+      <span class="skill-tag">Problem Solving</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="skill-tag accent">HTML & CSS</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">C Programming</span>
+      <span class="skill-tag accent">Python</span>
+      <span class="skill-tag">Data Structures</span>
+      <span class="skill-tag">Git &amp; GitHub</span>
+      <span class="skill-tag accent">React (Learning)</span>
+      <span class="skill-tag">Databases</span>
+      <span class="skill-tag">Responsive Design</span>
+      <span class="skill-tag accent">Linux Basics</span>
+      <span class="skill-tag">Node.js (Soon)</span>
+      <span class="skill-tag">Problem Solving</span>
+    </div>
+  </div>
+
+  <!-- ── EDUCATION ─────────────────────────────────────────── -->
   <section id="education">
-    <p class="label">Education</p>
-    <h2>Where I've <em>learned</em></h2>
-    <div class="timeline">
-      <div class="tl-item">
-        <span class="tl-year">2025 — Now</span>
-        <div class="tl-body">
-          <h3>BSc. Computer Science & Information Technology</h3>
-          <p>Patan Multiple Campus, Lalitpur</p>
+    <div class="section-inner">
+      <p class="label reveal">Education</p>
+      <h2 class="section-heading reveal reveal-delay-1">Where I've <em>learned</em></h2>
+
+      <div class="timeline">
+
+        <div class="tl-item reveal reveal-delay-1">
+          <div class="tl-year">
+            <div class="tl-dot"></div>
+            2025 — Now
+          </div>
+          <div class="tl-body">
+            <h3>BSc. Computer Science &amp; Information Technology</h3>
+            <p class="tl-place">Patan Multiple Campus, Lalitpur &nbsp;·&nbsp; Tribhuvan University</p>
+            <p class="tl-desc">
+              Currently in my first semester, studying core computer science fundamentals —
+              including programming, mathematics, digital logic, and introductory system concepts.
+              Building the base for a career in full-stack web development.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-year">2024 — 2025</span>
-        <div class="tl-body">
-          <h3>Higher Secondary Education</h3>
-          <p>Tribhuvan Secondary School, Banke</p>
+
+        <div class="tl-item reveal reveal-delay-2">
+          <div class="tl-year">
+            <div class="tl-dot"></div>
+            2023 — 2025
+          </div>
+          <div class="tl-body">
+            <h3>Higher Secondary Education — Science (Biology)</h3>
+            <p class="tl-place">Tribhuvan Secondary School, Banke</p>
+            <p class="tl-desc">
+              Completed +2 in the science stream. Though biology was the chosen stream,
+              this period sharpened analytical thinking and laid the discipline needed
+              to pivot into technology with purpose.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-year">2023</span>
-        <div class="tl-body">
-          <h3>Secondary Education Examination</h3>
-          <p>Tribhuvan Secondary School, Banke</p>
+
+        <div class="tl-item reveal reveal-delay-3">
+          <div class="tl-year">
+            <div class="tl-dot"></div>
+            2023
+          </div>
+          <div class="tl-body">
+            <h3>Secondary Education Examination (SEE)</h3>
+            <p class="tl-place">Tribhuvan Secondary School, Banke</p>
+            <p class="tl-desc">
+              Completed Grade 10. First encounters with computer science coursework
+              sparked the curiosity that eventually led here.
+            </p>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- GOALS -->
+  <!-- ── GOALS ─────────────────────────────────────────────── -->
   <section id="goals">
-    <p class="label">Looking ahead</p>
-    <h2>What I'm <em>working toward</em></h2>
-    <div class="goals-grid">
-      <div class="goal">
-        <p class="goal-num">01</p>
-        <h3>Full Stack Development</h3>
-        <p>Learning to build complete web applications from front to back — my core technical goal.</p>
-      </div>
-      <div class="goal">
-        <p class="goal-num">02</p>
-        <h3>Remote Tech Career</h3>
-        <p>Aiming to work remotely as a developer from Nepal, contributing to projects worldwide.</p>
+    <div class="section-inner">
+      <p class="label reveal">Looking ahead</p>
+      <h2 class="section-heading reveal reveal-delay-1">What I'm <em>working toward</em></h2>
+
+      <div class="goals-grid">
+        <div class="goal reveal reveal-delay-1">
+          <p class="goal-num">01</p>
+          <h3>Full-Stack Development</h3>
+          <p>Learning to build complete web applications — from well-structured HTML and CSS to dynamic JavaScript front-ends and server-side back-ends. This is my core technical focus.</p>
+        </div>
+        <div class="goal reveal reveal-delay-2">
+          <p class="goal-num">02</p>
+          <h3>Remote Tech Career</h3>
+          <p>Aiming to work as a developer remotely from Nepal — contributing to meaningful projects worldwide and proving that geography is not a limitation in modern tech.</p>
+        </div>
+        <div class="goal reveal reveal-delay-3">
+          <p class="goal-num">03</p>
+          <h3>Open Source Contributions</h3>
+          <p>Plan to start contributing to open-source projects once the fundamentals are solid. Real-world collaboration and public code are the fastest paths to growth.</p>
+        </div>
+        <div class="goal reveal reveal-delay-4">
+          <p class="goal-num">04</p>
+          <h3>Personal Projects &amp; Portfolio</h3>
+          <p>Building side projects that solve real problems — not just for the résumé, but to experience the full cycle of taking an idea from concept to deployment.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- ── CONTACT ───────────────────────────────────────────── -->
   <section id="contact">
-    <p class="label">Get in touch</p>
-    <p class="contact-big">Let's <em>connect</em></p>
-    <a class="email-link" href="mailto:malikayadav903@gmail.com">malikayadav903@gmail.com</a>
+    <div class="section-inner">
+      <p class="label reveal">Get in touch</p>
+
+      <div class="contact-layout">
+        <p class="contact-big reveal reveal-delay-1">
+          Open to<br><em>conversations,</em><br>collaborations &amp; advice.
+        </p>
+
+        <div class="contact-right reveal reveal-delay-2">
+          <a class="email-link" href="mailto:malikayadav903@gmail.com">
+            malikayadav903@gmail.com
+            <span class="email-link-arrow">→</span>
+          </a>
+          <span class="contact-note">Response within 48 hrs</span>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <footer>© 2025 Malika Yadav &nbsp;·&nbsp; Kathmandu, Nepal</footer>
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer>
+    <span>© 2025 Malika Yadav</span>
+    <div class="footer-dot"></div>
+    <span>Kathmandu, Nepal</span>
+    <div class="footer-dot"></div>
+    <span>BSc. CSIT — Patan Multiple Campus</span>
+  </footer>
 
+  <script>
+    /* ── Cursor dot ───────────────────── */
+    const dot = document.getElementById('cursorDot');
+    document.addEventListener('mousemove', e => {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top  = e.clientY + 'px';
+    });
+    document.addEventListener('mouseleave', () => dot.style.opacity = '0');
+    document.addEventListener('mouseenter', () => dot.style.opacity = '1');
+
+    /* ── Scroll reveal ────────────────── */
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.12 }
+    );
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
